@@ -26,9 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //lIstar Baladas
 app.get('/', function(req, res){
 	Balada.find(function(err, result){
-		if (err) {
-			return res.json(500, err);
-		}
+				if (err) {
+					return res.json(500, err);
+				}
        res.send(result);
     });
 });
@@ -76,6 +76,8 @@ app.post('/balada', function(req, res){
 			}
 			res.send(result);
 		});
+	}else {
+		return res.json(420, "deu ruim");
 	}
 });
 
@@ -88,6 +90,8 @@ app.post('/id', function(req, res){
 			}
 			res.send(result);
 		});
+	}else {
+		return res.json(420, "deu ruim");
 	}
 });
 
@@ -95,22 +99,28 @@ app.post('/id', function(req, res){
 app.post('/',function(req,res){
 	var request = req.body;
 
-	var novo = [];
 	if(request.length >= 2){
 		for (var i = 0; i < request.length; i++) {
-			novo[i] = new Balada(request[i]);
-			var balada = novo[i];
+			var balada = new Balada(request[i]);
 			balada.save(function(err){
 				if (err) {
 	 				return res.json(500, err);
 	 		 }
 			});
 		}
+	}else if(request){
+		var balada = new Balada(request);
+		balada.save(function(err){
+			if (err) {
+				return res.json(500, err);
+		 }
+		});
 	}
 	res.send("Dados Salvos com sucesso!");
 
 });
 
+//Apagar Por id
 app.delete('/id',function(req,res){
 	if(req.body._id){
 		Balada.findByIdAndRemove(req.body._id, function(err) {
@@ -120,6 +130,8 @@ app.delete('/id',function(req,res){
 			console.log('User deleted!');
 			res.send('Balada deleted!');
 		});
+	}else {
+		return res.json(420, "deu ruim");
 	}
 })
 
