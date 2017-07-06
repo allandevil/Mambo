@@ -26,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //lIstar Baladas
 app.get('/', function(req, res){
 	Balada.find(function(err, result){
+		if (err) {
+			return res.json(500, err);
+		}
        res.send(result);
     });
 });
@@ -68,6 +71,9 @@ app.post('/baladasLocal', function(req, res, next){
 app.post('/balada', function(req, res){
 	if(req.body.nome){
 		Balada.find({ nome: req.body.nome}, function(err, result){
+			if (err) {
+				return res.json(500, err);
+			}
 			res.send(result);
 		});
 	}
@@ -77,6 +83,9 @@ app.post('/balada', function(req, res){
 app.post('/id', function(req, res){
 	if(req.body._id){
 		Balada.findById(req.body._id, function(err, result){
+			if (err) {
+				return res.json(500, err);
+			}
 			res.send(result);
 		});
 	}
@@ -84,10 +93,34 @@ app.post('/id', function(req, res){
 
 //gravar registro
 app.post('/',function(req,res){
-  var novo = new Balada(req.body);
-	novo.save(function(err){
-		if(err) throw err;
-		res.send("Dados Salvos com sucesso!")
-	});
+	var request = req.body;
+
+	var novo = [];
+	if(request.length >= 2){
+		for (var i = 0; i < request.length; i++) {
+			novo[i] = new Balada(request[i]);
+			var balada = novo[i];
+			balada.save(function(err){
+				if (err) {
+	 				return res.json(500, err);
+	 		 }
+			});
+		}
+	}
+	res.send("Dados Salvos com sucesso!");
+
 });
+
+app.delete('/id',function(req,res){
+	if(req.body._id){
+		Balada.findByIdAndRemove(req.body._id, function(err) {
+			if (err) {
+				return res.json(500, err);
+			}
+			console.log('User deleted!');
+			res.send('Balada deleted!');
+		});
+	}
+})
+
 app.listen(1337);
