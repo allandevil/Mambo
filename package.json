@@ -1,0 +1,25 @@
+{
+  "name": "mambo",
+  "version": "1.0.1",
+  "description": "Servidor Basico",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allandevil/Mambo.git"
+  },
+  "author": "AllanDevil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allandevil/Mambo/issues"
+  },
+  "homepage": "https://github.com/allandevil/Mambo#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.7",
+    "path": "^0.12.7"
+  }
+}

@@ -16,6 +16,7 @@ var mycallback = function(err,results) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public/mountain-king-html')));
 
 var routes = require('./routes/routes.js')(app);
 
